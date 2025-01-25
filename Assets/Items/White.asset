@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eca96e46fac601f48a4f684890807383, type: 3}
   m_Name: White
   m_EditorClassIdentifier: 
-  itemName: 
-  icon: {fileID: 0}
+  itemName: White
+  icon: {fileID: 4657277989372595722, guid: ebf1050b0e4738349a28734e038278ba, type: 3}
