@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 939ce92706034894fad87c2a3ce3bfaa, type: 3}
   m_Name: WhiteRecipe
   m_EditorClassIdentifier: 
-  item1: {fileID: 0}
-  item2: {fileID: 0}
-  result: {fileID: 0}
+  item1: {fileID: 11400000, guid: e0d132ec4b89d784aa78165563911595, type: 2}
+  item2: {fileID: 11400000, guid: a3bbd685508f32e45829cafeeb1c66e7, type: 2}
+  result: {fileID: 11400000, guid: a3bbd685508f32e45829cafeeb1c66e7, type: 2}
