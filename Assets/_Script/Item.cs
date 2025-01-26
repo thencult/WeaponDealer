@@ -6,11 +6,12 @@ public class Item : MonoBehaviour
 {
     private string Name;
     private string Description;
-    private List<ItemTypes.Type> Type;
+    private List<ItemTypes.Type> Types;
     private ItemTypes.Rarity Rarity;
     private float AttackDamage;
+    private float Price;
 
-    public static float CalculateAttack(ItemTypes.Rarity rarity, List<ItemTypes.Type> types)
+    public void CalculateAttack(ItemTypes.Rarity rarity, List<ItemTypes.Type> types)
     {
         float sum = 0;
         float modifiersSum = 0;
@@ -21,13 +22,28 @@ public class Item : MonoBehaviour
         }
         sum += ItemTypes.AdditiveRarityDamage.GetValueOrDefault(rarity);
         float result = sum * modifiersSum;
-        return result;
+        AttackDamage = result;
     }
+    public void CalculatePrice(ItemTypes.Rarity rarity, List<ItemTypes.Type> types)
+    {
+        float sum = 0;
+        float modifiersSum = 0;
+        for (int i = 0; i < types.Count - 1; i++)
+        {
+            sum += ItemTypes.TypeBasePrice.GetValueOrDefault(types[i]);
+            modifiersSum += ItemTypes.TypePriceModifiers.GetValueOrDefault(types[i]);
+        }
+        sum += ItemTypes.AdditiveRarityPrice.GetValueOrDefault(rarity);
+        float result = sum * modifiersSum;
+        AttackDamage = result;
+    }
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        AttackDamage = CalculateAttack(Rarity, Type);
+        CalculateAttack(Rarity, Types);
+        CalculatePrice(Rarity, Types);
     }
 
     // Update is called once per frame

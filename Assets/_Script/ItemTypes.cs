@@ -38,7 +38,7 @@ public sealed class ItemTypes
         {ItemTypes.Type.Void, 1.15f}
     };
     // Base money to be paid according to type
-    public static Dictionary<ItemTypes.Type, float> TypeBaseMoney = new Dictionary<ItemTypes.Type, float>()
+    public static Dictionary<ItemTypes.Type, float> TypeBasePrice = new Dictionary<ItemTypes.Type, float>()
     {
         {ItemTypes.Type.Slash, 10f},
         {ItemTypes.Type.Impact, 10f},
@@ -49,7 +49,7 @@ public sealed class ItemTypes
         {ItemTypes.Type.Void, 20f}
     };
     // Money modifier according to type
-    public static Dictionary<ItemTypes.Type, float> TypeMoneyModifiers = new Dictionary<ItemTypes.Type, float>()
+    public static Dictionary<ItemTypes.Type, float> TypePriceModifiers = new Dictionary<ItemTypes.Type, float>()
     {
         {ItemTypes.Type.Slash, 1.3f},
         {ItemTypes.Type.Impact, 1.3f},
@@ -73,7 +73,7 @@ public sealed class ItemTypes
         {ItemTypes.Rarity.Perfected, 10 }
     };
     // Additive money according to rarity
-    public static Dictionary<ItemTypes.Rarity, float> AdditiveRarityMoney = new Dictionary<ItemTypes.Rarity, float>()
+    public static Dictionary<ItemTypes.Rarity, float> AdditiveRarityPrice = new Dictionary<ItemTypes.Rarity, float>()
     {
         {ItemTypes.Rarity.Normal, 5 },
         {ItemTypes.Rarity.Enhanced, 10 },
