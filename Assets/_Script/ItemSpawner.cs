@@ -32,15 +32,20 @@ public class ItemSpawner : MonoBehaviour
 
         // Spawn the item
         GameObject newItem = Instantiate(itemPrefab, position, Quaternion.identity);
-        
+
+
         // Assign the item data and sprite to the spawned item
         if (newItem.TryGetComponent(out DraggableItem draggable) &&
             newItem.TryGetComponent(out SpriteRenderer spriteRenderer))
         {
+            draggable.StartDragging();
             draggable.itemData = itemToSpawn;
             spriteRenderer.sprite = itemToSpawn.icon;
-            newItem.gameObject.name = draggable.itemData.itemName;
             newItem.gameObject.name = itemToSpawn.itemName;
+
+            // Сразу начать перетаскивание предмета
+            draggable.StartDragging();
+
             Debug.Log($"Spawned item: {itemToSpawn.itemName} at {position}");
         }
         else

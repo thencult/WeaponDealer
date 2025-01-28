@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1793576744829202720}
   - component: {fileID: 8581786450998257085}
   - component: {fileID: -8528978609860149896}
+  - component: {fileID: 5967147220361487652}
   m_Layer: 0
   m_Name: Pink
   m_TagString: DraggableItem
@@ -102,6 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: 7f4cb9d2deaa4b347bed21a0d8cbba42, type: 2}
+  isCombining: 0
 --- !u!61 &-8528978609860149896
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -148,3 +150,30 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.48, y: 1.38}
   m_EdgeRadius: 0
+--- !u!50 &5967147220361487652
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6306246106512458859}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
