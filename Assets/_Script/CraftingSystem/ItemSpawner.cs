@@ -42,10 +42,25 @@ public class ItemSpawner : MonoBehaviour
             draggable.itemData = itemToSpawn;
             spriteRenderer.sprite = itemToSpawn.icon;
             newItem.gameObject.name = itemToSpawn.itemName;
+<<<<<<< Updated upstream:Assets/_Script/ItemSpawner.cs
+<<<<<<< Updated upstream
 
             // Сразу начать перетаскивание предмета
             draggable.StartDragging();
 
+=======
+<<<<<<< Updated upstream:Assets/_Script/ItemSpawner.cs
+=======
+>>>>>>> Stashed changes
+=======
+
+
+
+>>>>>>> Stashed changes:Assets/_Script/CraftingSystem/ItemSpawner.cs
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes:Assets/_Script/CraftingSystem/ItemSpawner.cs
+=======
+>>>>>>> Stashed changes
             Debug.Log($"Spawned item: {itemToSpawn.itemName} at {position}");
         }
         else

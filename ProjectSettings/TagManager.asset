@@ -7,6 +7,8 @@ TagManager:
   - DropZone
   - CraftingSlot
   - DraggableItem
+  - DeletionZone
+  - TimerSlider
   layers:
   - Default
   - TransparentFX
