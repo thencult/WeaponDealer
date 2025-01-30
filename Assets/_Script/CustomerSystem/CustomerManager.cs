@@ -11,6 +11,8 @@ public class CustomerManager : MonoBehaviour
     public CraftingItem givenOrder; //variable for item, which player gives to the customer, information
     OrderManager orderManager; //an object with the order array
     SpriteRenderer spriteRenderer; //this object's sprite manager, used for storing all the orders in an array.
+    GameManager gameManager;
+    
 
     //==========RANDOM VALUES=========
     int randomOrderIndex() //randomizes orders
@@ -36,35 +38,53 @@ public class CustomerManager : MonoBehaviour
 
         if (orderManager == null)
             orderManager = FindAnyObjectByType<OrderManager>(); //same for OrderManager
+        
+        if (gameManager == null)
+            gameManager = FindFirstObjectByType<GameManager>();
     }
 
-    void MakeOrder()
+    public void MakeOrder()
     {
         desiredOrder = orderManager.possibleOrders[randomOrderIndex()]; //choose an order
         desiredOrderitem = desiredOrder.itemRequest; //take an item out of it
         textBubble.SetActive(true); //show text bubble
-        textBubbleText.text = PickRandomPhrase(); //print randomized text on it
+        textBubbleText.text = PickRandomPhrase() + desiredOrderitem.name; //print randomized text on it
     }
-    void SpawnCustomer()
+    public void SpawnCustomer()
     {
-        spriteRenderer.sprite = customerData[randomCustomerIndex()].customerSprite; //assigns Sprite, stored in customerData, to this object
-        gameObject.name = customerData[randomCustomerIndex()].name; //same for the name
+        int fixedCustomer = randomCustomerIndex();
+        spriteRenderer.sprite = customerData[fixedCustomer].customerSprite; //assigns Sprite, stored in customerData, to this object
+        gameObject.name = customerData[fixedCustomer].name; //same for the name
         MakeOrder();
+        gameManager.StartCountdown(gameManager.maxTimer);
+
     }
 
-    void CompleteOrder()
+    void OnTriggerEnter2D(Collider2D other) {
+
+        if (other.gameObject.GetComponent<DraggableItem>().itemData == desiredOrderitem) {
+            CompleteOrder();
+            Destroy(other.gameObject);
+        }
+
+    }
+
+    public void CompleteOrder()
     {
         //basically needs to be: if given item mathes the desired order item, move on to the next customer and give player order cost money
         //if item isn't matching - next customer
+        Debug.Log("Order Complete");
+        gameManager.money += desiredOrder.cost;
+        NextCustomer();
     }
 
-    void NextCustomer()
-    {
-        //moves to the next customer
+    public void FailOrder() {
+        Debug.Log("Order Failed");
+        NextCustomer();
     }
-
-    void Start()
+    public void NextCustomer()
     {
+        Debug.Log("Next Customer");
         SpawnCustomer();
     }
 

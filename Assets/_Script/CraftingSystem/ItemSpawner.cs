@@ -38,14 +38,9 @@ public class ItemSpawner : MonoBehaviour
         if (newItem.TryGetComponent(out DraggableItem draggable) &&
             newItem.TryGetComponent(out SpriteRenderer spriteRenderer))
         {
-            draggable.StartDragging();
             draggable.itemData = itemToSpawn;
             spriteRenderer.sprite = itemToSpawn.icon;
             newItem.gameObject.name = itemToSpawn.itemName;
-
-            // Сразу начать перетаскивание предмета
-            draggable.StartDragging();
-
             Debug.Log($"Spawned item: {itemToSpawn.itemName} at {position}");
         }
         else

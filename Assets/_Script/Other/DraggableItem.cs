@@ -3,38 +3,26 @@ using UnityEngine;
 public class DraggableItem : MonoBehaviour
 {
     private Vector3 offset;
-    private bool isInsideDropZone = false;
-    private bool isDragging = false; // Новый флаг для авто-перетаскивания
-
-    public CraftingItem itemData;
-    public bool isCombining = false;
-
-    void Update()
-    {
-        if (isDragging)
-        {
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            transform.position = new Vector3(mousePosition.x, mousePosition.y, 0) + offset;
-        }
-    }
+    private bool isInsideDropZone = false; // Флаг, находится ли предмет в DropZone
+    
+    public CraftingItem itemData; // Assign the ScriptableObject for this item
+    public bool isCombining = false; // Prevent duplicate combinations
 
     void OnMouseDown()
     {
-        StartDragging();
-    }
-
-    public void StartDragging()
-    {
-        isDragging = true;
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         offset = transform.position - new Vector3(mousePosition.x, mousePosition.y, 0);
     }
 
+    void OnMouseDrag()
+    {
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        transform.position = new Vector3(mousePosition.x, mousePosition.y, 0) + offset;
+    }
+
     void OnMouseUp()
     {
-        isDragging = false;
-
-        if (!isInsideDropZone)
+        if (!isInsideDropZone) // Если предмет не в зоне стола, удалить его
         {
             Debug.Log($"{gameObject.name} удалён, так как он вне DropZone!");
             Destroy(gameObject);
@@ -43,7 +31,7 @@ public class DraggableItem : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("DraggableItem") && !isCombining && other.gameObject != gameObject)
+        if (other.CompareTag("DraggableItem") && !isCombining && other.gameObject != gameObject) // Ignore self
         {
             DraggableItem otherItem = other.GetComponent<DraggableItem>();
             if (otherItem != null && !otherItem.isCombining)
@@ -67,7 +55,7 @@ public class DraggableItem : MonoBehaviour
         }
         else if (other.CompareTag("DropZone"))
         {
-            isInsideDropZone = true;
+            isInsideDropZone = true; // Предмет теперь в зоне стола
         }
     }
 
@@ -75,7 +63,7 @@ public class DraggableItem : MonoBehaviour
     {
         if (other.CompareTag("DropZone"))
         {
-            isInsideDropZone = false;
+            isInsideDropZone = false; // Предмет вышел из зоны стола
         }
     }
 }
