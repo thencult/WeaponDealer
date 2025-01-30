@@ -1232,7 +1232,7 @@ MonoBehaviour:
   phrases:
   - 'Can I have, uhh... '
   - 'I would like to have '
-  - I will have
+  - 'I will have '
   customerData:
   - {fileID: 11400000, guid: 1824b395c439c0c40a42b28d5402f4d8, type: 2}
   - {fileID: 11400000, guid: 0b4b0f9d154978b4f938ef184d0f245f, type: 2}
