@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf5bc140e5965444686473ebb30a2bb9, type: 3}
   m_Name: Arthur
   m_EditorClassIdentifier: 
-  customerName: Arthur
-  customerSprite: {fileID: 7047888579345826262, guid: 827ffadcbab0b84458f0f603cb1730e2, type: 3}
-  order: {fileID: 11400000, guid: 362b03c0ba7e2fd47ac345381ade039c, type: 2}
+  customerSprite: {fileID: -5712317750869643546, guid: 3275f5a7cafb7644a9b4fa8b0b52f68a, type: 3}
+  order: {fileID: 0}
   isDangerous: 0
