@@ -1,91 +1,152 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
+using Unity.VisualScripting;
+
 public class CustomerManager : MonoBehaviour
 {
-    public string[] phrases; //list of phrases customer say when are spawned (should be like "I'd like to order..." + order number)
-    public Customer[] customerData; //list of customer data, a ScriptableObject which holds customer order, name, sprite etc. this object is just a place to show all the info, and where to press
-    public GameObject textBubble; //text bubble object, used just to hide text bubble, but can be used to store backgrounds etc.
-    public TextMeshProUGUI textBubbleText; //text of the bubble, where phrases are shown
-    public Order desiredOrder; //a randomised order per customer
-    CraftingItem desiredOrderitem; //item of that order
-    public CraftingItem givenOrder; //variable for item, which player gives to the customer, information
-    OrderManager orderManager; //an object with the order array
-    SpriteRenderer spriteRenderer; //this object's sprite manager, used for storing all the orders in an array.
+    public string[] phrases; 
+    public Customer[] customerData; 
+    public GameObject textBubble; 
+    public TextMeshProUGUI textBubbleText; 
+    public Order desiredOrder; 
+    CraftingItem desiredOrderitem; 
+    public CraftingItem givenOrder; 
+    OrderManager orderManager; 
+    SpriteRenderer spriteRenderer; 
     GameManager gameManager;
+    Animator animator;
     
-
-    //==========RANDOM VALUES=========
-    int randomOrderIndex() //randomizes orders
-    {
-        return Random.Range(0, orderManager.possibleOrders.Length);
-    }
-    int randomCustomerIndex() //randomizes customers
-    {
-        return Random.Range(0, customerData.Length);
-    }
-    string PickRandomPhrase() //randomizes the phrase to be told by the customer
-    {
-        int randomPhraseIndex = Random.Range(0, phrases.Length);
-        return phrases[randomPhraseIndex];
-    }
-    //=================================
-
-
     void Awake()
     {
         if (spriteRenderer == null)
-            spriteRenderer = gameObject.GetComponent<SpriteRenderer>(); //assigns SpriteRenderer if it's disabled/not found
+            spriteRenderer = gameObject.GetComponent<SpriteRenderer>(); 
 
         if (orderManager == null)
-            orderManager = FindAnyObjectByType<OrderManager>(); //same for OrderManager
+            orderManager = FindAnyObjectByType<OrderManager>();
         
         if (gameManager == null)
             gameManager = FindFirstObjectByType<GameManager>();
+
+        if (animator == null)
+            animator = gameObject.GetComponent<Animator>();
     }
+
+    //================ RANDOMIZERS ================
+    int randomOrderIndex() { return Random.Range(0, orderManager.possibleOrders.Length); }
+    int randomCustomerIndex() { return Random.Range(0, customerData.Length); }
+    string PickRandomPhrase() {
+        int randomPhraseIndex = Random.Range(0, phrases.Length);
+        return phrases[randomPhraseIndex];
+    }
+    //=============================================
 
     public void MakeOrder()
     {
-        desiredOrder = orderManager.possibleOrders[randomOrderIndex()]; //choose an order
-        desiredOrderitem = desiredOrder.itemRequest; //take an item out of it
-        textBubble.SetActive(true); //show text bubble
-        textBubbleText.text = PickRandomPhrase() + desiredOrderitem.name; //print randomized text on it
+        desiredOrder = orderManager.possibleOrders[randomOrderIndex()];
+        desiredOrderitem = desiredOrder.itemRequest;
+        textBubble.SetActive(true);
+        textBubbleText.text = PickRandomPhrase() + " " + desiredOrderitem.name;
     }
+
     public void SpawnCustomer()
     {
         int fixedCustomer = randomCustomerIndex();
-        spriteRenderer.sprite = customerData[fixedCustomer].customerSprite; //assigns Sprite, stored in customerData, to this object
-        gameObject.name = customerData[fixedCustomer].name; //same for the name
-        MakeOrder();
+        spriteRenderer.sprite = customerData[fixedCustomer].customerSprite;
+        gameObject.name = customerData[fixedCustomer].name;
+        animator.SetTrigger("Spawn");
+        gameManager.hasActiveCustomer = true;
         gameManager.StartCountdown(gameManager.maxTimer);
-
+        MakeOrder();
+        // Запускаем таймер для этого клиента
+        gameManager.StartCountdown(gameManager.maxTimer);
     }
 
-    void OnTriggerEnter2D(Collider2D other) {
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        var draggableItem = other.gameObject.GetComponent<DraggableItem>();
+        if (draggableItem == null) return;
 
-        if (other.gameObject.GetComponent<DraggableItem>().itemData == desiredOrderitem) {
+        if (draggableItem.itemData == desiredOrderitem) {
             CompleteOrder();
             Destroy(other.gameObject);
         }
-
+        else {
+            FailOrder();
+            Destroy(other.gameObject);
+        }
     }
 
-    public void CompleteOrder()
-    {
-        //basically needs to be: if given item mathes the desired order item, move on to the next customer and give player order cost money
-        //if item isn't matching - next customer
-        Debug.Log("Order Complete");
-        gameManager.money += desiredOrder.cost;
-        NextCustomer();
+public void CompleteOrder()
+{
+    Debug.Log("Order Complete");
+    // Останавливаем таймер немедленно
+    gameManager.StopCountdown();
+
+    StartCoroutine(DelayedTextClear());
+    gameManager.money += desiredOrder.cost;
+    gameManager.coinCounter.text = "Score: " + gameManager.money.ToString();
+
+    NextCustomer(); 
+}
+
+public void FailOrder()
+{
+    Debug.Log("Order Failed");
+    // Останавливаем таймер немедленно
+    gameManager.StopCountdown();
+
+    gameManager.health--;
+    if (gameManager.health == 3) {
+        gameManager.heart_one.SetActive(true);
+        gameManager.heart_two.SetActive(true);
+        gameManager.heart_three.SetActive(true);
+    }
+    else if (gameManager.health == 2) {
+        gameManager.heart_one.SetActive(false);
+        gameManager.heart_two.SetActive(true);
+        gameManager.heart_three.SetActive(true);
+    }
+    else if (gameManager.health == 1) {
+                gameManager.heart_one.SetActive(false);
+        gameManager.heart_two.SetActive(false);
+        gameManager.heart_three.SetActive(true);
     }
 
-    public void FailOrder() {
-        Debug.Log("Order Failed");
-        NextCustomer();
+
+    textBubbleText.text = "This is not what I wanted!";
+    if (gameManager.health <= 0) {
+        gameManager.GameOver();
     }
+    StartCoroutine(DelayedNextCustomer());
+}
+
+
     public void NextCustomer()
+{
+    // Перед тем, как «уходит» старый клиент, можно сразу выключить флаг
+    gameManager.hasActiveCustomer = false;
+
+    animator.SetTrigger("Go Away");
+    gameManager.DecreaseTimerForNextCustomer();
+    StartCoroutine(DelayedSpawnCustomer());
+}
+    IEnumerator DelayedNextCustomer()
     {
-        Debug.Log("Next Customer");
+        yield return new WaitForSeconds(2.0f);
+        NextCustomer();
+    }
+
+    IEnumerator DelayedSpawnCustomer()
+    {
+        yield return new WaitForSeconds(2.0f);
         SpawnCustomer();
     }
 
+    IEnumerator DelayedTextClear()
+    {
+        textBubbleText.text = "Thank you!";
+        yield return new WaitForSeconds(1.0f);
+        textBubbleText.text = "";
+    }
 }

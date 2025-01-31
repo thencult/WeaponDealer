@@ -7,21 +7,44 @@ public class DraggableItem : MonoBehaviour
     
     public CraftingItem itemData; // Assign the ScriptableObject for this item
     public bool isCombining = false; // Prevent duplicate combinations
+    private GameManager gameManager; // Ссылка на GameManager
 
+    void Awake()
+    {
+        gameManager = FindFirstObjectByType<GameManager>();
+    }
     void OnMouseDown()
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         offset = transform.position - new Vector3(mousePosition.x, mousePosition.y, 0);
+
+                if (!gameManager.hasActiveCustomer)
+        {
+            // Просто игнорируем клик, либо можно вывести сообщение
+            return;
+        }
     }
 
     void OnMouseDrag()
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = new Vector3(mousePosition.x, mousePosition.y, 0) + offset;
+
+        if (!gameManager.hasActiveCustomer)
+        {
+            // Просто игнорируем клик, либо можно вывести сообщение
+            return;
+        }
     }
 
     void OnMouseUp()
+    
     {
+
+        if (!gameManager.hasActiveCustomer)
+        {
+            return;
+        }
         if (!isInsideDropZone) // Если предмет не в зоне стола, удалить его
         {
             Debug.Log($"{gameObject.name} удалён, так как он вне DropZone!");

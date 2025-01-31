@@ -9,6 +9,9 @@ TagManager:
   - DraggableItem
   - DeletionZone
   - TimerSlider
+  - Smoke
+  - Material
+  - EndResult
   layers:
   - Default
   - TransparentFX

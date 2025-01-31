@@ -4,7 +4,7 @@ using UnityEngine;
 public class RecipeManager : MonoBehaviour
 {
     public List<CraftingRecipe> recipes; // Assign all recipes in the Inspector
-
+    public GameObject smokeParticle;
     public GameObject itemPrefab; // Prefab for spawned items
 
 public void TryCombine(GameObject item1, GameObject item2)
@@ -19,24 +19,21 @@ public void TryCombine(GameObject item1, GameObject item2)
         return;
     }
 
-    Debug.Log($"Checking combination: {data1.itemData.itemName} + {data2.itemData.itemName}");
 
     foreach (CraftingRecipe recipe in recipes)
     {
-        Debug.Log($"Checking recipe: {recipe.item1.itemName} + {recipe.item2.itemName} = {recipe.result.itemName}");
 
         if ((recipe.item1 == data1.itemData && recipe.item2 == data2.itemData) ||
             (recipe.item1 == data2.itemData && recipe.item2 == data1.itemData))
         {
-            Debug.Log($"Recipe matched! Combining {data1.itemData.itemName} and {data2.itemData.itemName} to create {recipe.result.itemName}");
 
             Vector3 spawnPosition = (item1.transform.position + item2.transform.position) / 2;
 
             Destroy(item1);
             Destroy(item2);
 
+            SpawnSmokeParticle(spawnPosition);
             SpawnItem(recipe.result, spawnPosition);
-
             // Reset the combining state after successful combination
             return;
         }
@@ -53,10 +50,12 @@ private void ResetCombiningState(DraggableItem data1, DraggableItem data2)
 }
 
 
-
+public void SpawnSmokeParticle(Vector3 spawnPosition) {
+                Instantiate(smokeParticle, spawnPosition, Quaternion.identity);
+}
 public void SpawnItem(CraftingItem item, Vector3 position)
 {
-    Debug.Log($"Spawning new item: {item.itemName} at position {position}");
+
 
     // Instantiate the prefab
     GameObject newItem = Instantiate(itemPrefab, position, Quaternion.identity);
@@ -73,7 +72,6 @@ public void SpawnItem(CraftingItem item, Vector3 position)
         // Adjust the collider size to fit the sprite
         ResizeColliderToSprite(collider2d, spriteRenderer);
 
-        Debug.Log($"{item.itemName} spawned successfully!");
     }
     else
     {
