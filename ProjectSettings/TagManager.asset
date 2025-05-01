@@ -12,7 +12,10 @@ TagManager:
   - Smoke
   - Material
   - EndResult
-  - Hammer
+  - MaterialCard
+  - ToolCard
+  - ResultCard
+  - HandSlot
   layers:
   - Default
   - TransparentFX
@@ -20,7 +23,7 @@ TagManager:
   - PostProcessing
   - Water
   - UI
-  - 
+  - Draggable
   - 
   - 
   - 

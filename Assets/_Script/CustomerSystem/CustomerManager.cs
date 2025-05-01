@@ -10,8 +10,8 @@ public class CustomerManager : MonoBehaviour
     public GameObject textBubble; 
     public TextMeshProUGUI textBubbleText; 
     public Order desiredOrder; 
-    CraftingItem desiredOrderitem; 
-    public CraftingItem givenOrder; 
+    Item desiredOrderitem; 
+    public Item givenOrder; 
     OrderManager orderManager; 
     SpriteRenderer spriteRenderer; 
     GameManager gameManager;
@@ -56,10 +56,8 @@ public class CustomerManager : MonoBehaviour
         gameObject.name = customerData[fixedCustomer].name;
         animator.SetTrigger("Spawn");
         gameManager.hasActiveCustomer = true;
-        gameManager.StartCountdown(gameManager.maxTimer);
         MakeOrder();
         // Запускаем таймер для этого клиента
-        gameManager.StartCountdown(gameManager.maxTimer);
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -81,7 +79,6 @@ public void CompleteOrder()
 {
     Debug.Log("Order Complete");
     // Останавливаем таймер немедленно
-    gameManager.StopCountdown();
 
     StartCoroutine(DelayedTextClear());
     gameManager.money += desiredOrder.cost;
@@ -94,7 +91,6 @@ public void FailOrder()
 {
     Debug.Log("Order Failed");
     // Останавливаем таймер немедленно
-    gameManager.StopCountdown();
 
     gameManager.health--;
     if (gameManager.health == 3) {
@@ -128,7 +124,6 @@ public void FailOrder()
     gameManager.hasActiveCustomer = false;
 
     animator.SetTrigger("Go Away");
-    gameManager.DecreaseTimerForNextCustomer();
     StartCoroutine(DelayedSpawnCustomer());
 }
     IEnumerator DelayedNextCustomer()

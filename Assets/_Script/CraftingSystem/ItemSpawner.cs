@@ -3,10 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))] // чтобы OnMouseDown/OnMouseDrag/OnMouseUp работали
 public class ItemSpawner : MonoBehaviour
 {
-    public CraftingItem itemToSpawn;    // Данные о предмете (ScriptableObject)
+    public Item itemToSpawn;    // Данные о предмете (ScriptableObject)
     public GameObject itemPrefab;       // Префаб для спауна
-    public Sprite idleSprite;           // Спрайт «мешка», когда мышь не наведена
-    public Sprite hoverSprite;          // Спрайт «мешка» при наведении мыши
     private SpriteRenderer spriteRenderer;
 
     private DraggableItem currentSpawnedItem = null;
@@ -16,21 +14,21 @@ public class ItemSpawner : MonoBehaviour
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        if (spriteRenderer && idleSprite)
-            spriteRenderer.sprite = idleSprite;
+        // if (spriteRenderer && idleSprite)
+        //     spriteRenderer.sprite = idleSprite;
     }
 
-    private void OnMouseEnter()
-    {
-        if (spriteRenderer && hoverSprite)
-            spriteRenderer.sprite = hoverSprite;
-    }
+    // private void OnMouseEnter()
+    // {
+    //     if (spriteRenderer && hoverSprite)
+    //         spriteRenderer.sprite = hoverSprite;
+    // }
 
-    private void OnMouseExit()
-    {
-        if (spriteRenderer && idleSprite)
-            spriteRenderer.sprite = idleSprite;
-    }
+    // private void OnMouseExit()
+    // {
+    //     if (spriteRenderer && idleSprite)
+    //         spriteRenderer.sprite = idleSprite;
+    // }
 
     private void OnMouseDown()
     {
@@ -44,7 +42,7 @@ public class ItemSpawner : MonoBehaviour
             newItemObj.TryGetComponent(out SpriteRenderer newItemSprite))
         {
             draggable.itemData = itemToSpawn;
-            newItemSprite.sprite = itemToSpawn.icon;
+            // newItemSprite.sprite = itemToSpawn.icon;
             newItemObj.name = itemToSpawn.name;
 
             // Запоминаем, что сейчас "тянем" этот предмет

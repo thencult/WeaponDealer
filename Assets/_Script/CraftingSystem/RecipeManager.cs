@@ -53,7 +53,7 @@ private void ResetCombiningState(DraggableItem data1, DraggableItem data2)
 public void SpawnSmokeParticle(Vector3 spawnPosition) {
                 Instantiate(smokeParticle, spawnPosition, Quaternion.identity);
 }
-public void SpawnItem(CraftingItem item, Vector3 position)
+public void SpawnItem(Item item, Vector3 position)
 {
 
 
