@@ -116,8 +116,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.44, y: 2.43, z: 0}
-  m_LocalScale: {x: 0.50419736, y: 0.50419736, z: 0.50419736}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 9024652033883913061}
   m_Father: {fileID: 0}
@@ -215,7 +215,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.54, y: 3.78}
+    oldSize: {x: 3.86, y: 4.1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -237,6 +237,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemToSpawn: {fileID: 0}
   itemPrefab: {fileID: 0}
-  spawnPoint: {fileID: 0}
   idleSprite: {fileID: -6843490977354910969, guid: 19c10e9cff94ffb4698c62d4117c21ac, type: 3}
   hoverSprite: {fileID: -5615797662902086626, guid: 166fe5cc425a721429044f017b7dc33a, type: 3}

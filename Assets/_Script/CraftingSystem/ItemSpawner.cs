@@ -34,13 +34,6 @@ public class ItemSpawner : MonoBehaviour
 
     private void OnMouseDown()
     {
-        // При нажатии на "мешок" сразу спавним предмет
-        if (itemPrefab == null || itemToSpawn == null)
-        {
-            Debug.LogError("ItemPrefab или ItemToSpawn не назначены в инспекторе!");
-            return;
-        }
-
         // Создаем предмет под курсором
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0;

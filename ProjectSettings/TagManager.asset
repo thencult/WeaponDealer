@@ -12,6 +12,7 @@ TagManager:
   - Smoke
   - Material
   - EndResult
+  - Hammer
   layers:
   - Default
   - TransparentFX

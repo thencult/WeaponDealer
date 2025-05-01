@@ -1,0 +1,9 @@
+You have basic materials in bags
+- Iron
+- Stone
+- Wood
+- Bone
+- Crystal
+
+You have scrolls (blueprints) of different weapon bases
+

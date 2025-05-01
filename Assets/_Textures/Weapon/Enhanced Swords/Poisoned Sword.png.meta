@@ -172,7 +172,9 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Poisoned Sword_0: -7688710889395994991
+      Poisoned Sword_1: -552248498019098017
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

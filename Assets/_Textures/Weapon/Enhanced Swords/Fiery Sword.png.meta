@@ -197,7 +197,10 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Fiery Sword_0: 5862055727700522296
+      Fiery Sword_1: 8788654492300449669
+      Fiery Sword_2: 5619408579424605516
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

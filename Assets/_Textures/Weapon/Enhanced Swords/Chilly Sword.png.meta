@@ -172,7 +172,9 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Chilly Sword_0: -8217252406729270038
+      Chilly Sword_1: 678925090790343997
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
